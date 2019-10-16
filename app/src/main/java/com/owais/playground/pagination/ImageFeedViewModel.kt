@@ -35,4 +35,7 @@ class ImageFeedViewModel : ViewModel() {
         feedDataFactory.invalidateDataSource(query)
     }
 
+    override fun onCleared() {
+        compositeDisposable.clear()
+    }
 }
