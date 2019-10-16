@@ -6,24 +6,33 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.owais.playground.Constants
 import com.owais.playground.pagination.model.Image
+import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.Executors
 
 
 class ImageFeedViewModel : ViewModel() {
 
+    var imagesLiveData: LiveData<PagedList<Image>>
+    private val compositeDisposable = CompositeDisposable()
+    private val feedDataFactory: FeedDataFactory
+
     private var executor = Executors.newFixedThreadPool(5)
-    var imageLiveData: LiveData<PagedList<Image>>
 
     init {
-        var feedDataFactory = FeedDataFactory()
+        feedDataFactory = FeedDataFactory(compositeDisposable, ImageService.getService())
 
-        val pagedListConfig = PagedList.Config.Builder()
+        val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(Constants.INITIAL_LOAD_SIZE)
+            .setInitialLoadSizeHint(Constants.INITIAL_LOAD_SIZE_HINT)
             .setPageSize(Constants.PAGE_SIZE).build()
 
-        imageLiveData = LivePagedListBuilder(feedDataFactory, pagedListConfig)
+        imagesLiveData = LivePagedListBuilder(feedDataFactory, config)
             .setFetchExecutor(executor)
             .build()
     }
+
+    fun invalidate(query: String) {
+        feedDataFactory.invalidateDataSource(query)
+    }
+
 }

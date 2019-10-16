@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.owais.playground.Constants
 import com.owais.playground.R
@@ -14,7 +15,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class FeedListAdapter(contextParam: Context) :
-    PagedListAdapter<Image, RecyclerView.ViewHolder>(ImageDiffCallback()) {
+    PagedListAdapter<Image, RecyclerView.ViewHolder>(ImageDiffCallback) {
 
     private val context = contextParam
 
@@ -58,6 +59,19 @@ class FeedListAdapter(contextParam: Context) :
             } else {
                 binding.textview.visibility = View.VISIBLE
                 binding.textview.text = context.getString(R.string.failed)
+            }
+        }
+    }
+
+    companion object {
+        val ImageDiffCallback = object : DiffUtil.ItemCallback<Image>() {
+            override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
+                return oldItem.id == newItem.id
+
+            }
+
+            override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
+                return oldItem.equals(newItem)
             }
         }
     }

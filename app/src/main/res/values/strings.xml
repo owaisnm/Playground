@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Playground</string>
-    <string name="pagination">Pagination</string>
+    <string name="pagination">Pagination with Search</string>
     <string name="failed">Failed</string>
     <string name="by_author">by %1$s</string>
-
+    <string name="search">Search</string>
 </resources>

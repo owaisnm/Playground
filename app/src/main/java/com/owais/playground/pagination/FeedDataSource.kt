@@ -6,66 +6,40 @@ import com.owais.playground.Constants
 import com.owais.playground.pagination.model.Image
 import com.owais.playground.pagination.model.ImageFeed
 import io.reactivex.annotations.NonNull
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import io.reactivex.disposables.CompositeDisposable
 
-class FeedDataSource : PageKeyedDataSource<Int, Image>() {
+class FeedDataSource(
+    private val query: String,
+    private val compositeDisposable: CompositeDisposable,
+    private val imageService: ImageService
+) : PageKeyedDataSource<Int, Image>() {
+
     private val TAG: String = FeedDataSource::class.java.simpleName
-    private val BASE_URL = "https://api.unsplash.com"
-    private val imageApi: ImageApi
-    //todo replace with edit text
-    val query = "apple"
-    val collectionIds = ""
-
-    init {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(logging)
-
-        val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(httpClient.build())
-            .build()
-        imageApi = retrofit.create(ImageApi::class.java)
-    }
+    private val collectionIds = ""
 
     override fun loadInitial(
         @NonNull params: LoadInitialParams<Int>,
         @NonNull callback: LoadInitialCallback<Int, Image>
     ) {
-
-        imageApi.getImageFeed(
-            Constants.UNSPLASH_ACCESS_KEY,
-            query,
-            1,
-            Constants.PAGE_SIZE,
-            collectionIds,
-            Orientation.portrait.name
-        )
-            .enqueue(object : Callback<ImageFeed> {
-                override fun onResponse(call: Call<ImageFeed>, response: Response<ImageFeed>) {
-                    if (response.isSuccessful) {
-                        var images = response.body()?.images
-                        if (images != null) {
-                            callback.onResult(images, null, 2)
-                        }
-                    }
+        compositeDisposable.add(
+            imageService.getImageFeed(
+                Constants.UNSPLASH_ACCESS_KEY,
+                query,
+                1,
+                Constants.PAGE_SIZE,
+                collectionIds,
+                Orientation.portrait.name
+            ).subscribe({ t: ImageFeed? ->
+                if (t != null) {
+                    callback.onResult(t.images, null, 2)
+                } else {
+                    Log.d(TAG, "loadInitial object is null")
                 }
-
-                override fun onFailure(call: Call<ImageFeed>, t: Throwable) {
-                    val errorMessage = if (t == null) Constants.UNKNOWN_ERROR else t.message
-                    Log.i(TAG, errorMessage)
-                }
+            }, { t: Throwable? ->
+                val errorMessage = if (t == null) Constants.UNKNOWN_ERROR else t.message
+                Log.d(TAG, errorMessage)
             })
+        )
     }
 
 
@@ -82,30 +56,28 @@ class FeedDataSource : PageKeyedDataSource<Int, Image>() {
 
         Log.i(TAG, "Loading Range " + params.key + " Count " + params.requestedLoadSize)
 
-        imageApi.getImageFeed(
-            Constants.UNSPLASH_ACCESS_KEY,
-            query,
-            params.key,
-            params.requestedLoadSize,
-            "",
-            Orientation.portrait.name
-        )
-            .enqueue(object : Callback<ImageFeed> {
-                override fun onResponse(call: Call<ImageFeed>, response: Response<ImageFeed>) {
-                    if (response.isSuccessful) {
-                        val nextKey =
-                            if (params.key == response?.body()?.total_pages) null else params.key + 1
-                        val images = response.body()?.images
-                        if (images != null) {
-                            callback.onResult(images, nextKey)
-                        }
-                    }
+        compositeDisposable.add(
+            imageService.getImageFeed(
+                Constants.UNSPLASH_ACCESS_KEY,
+                query,
+                params.key,
+                params.requestedLoadSize,
+                "",
+                Orientation.portrait.name
+            ).subscribe({ t: ImageFeed? ->
+                val nextKey =
+                    if (params.key == t?.total_pages) null else params.key + 1
+                val images = t?.images
+                if (images != null) {
+                    callback.onResult(images, nextKey)
+                } else {
+                    Log.d(TAG, "loadAfter object is null")
                 }
+            }, { t: Throwable? ->
 
-                override fun onFailure(call: Call<ImageFeed>, t: Throwable?) {
-                    val errorMessage = if (t == null) Constants.UNKNOWN_ERROR else t.message
-                    Log.i(TAG, errorMessage)
-                }
+                val errorMessage = if (t == null) Constants.UNKNOWN_ERROR else t.message
+                Log.i(TAG, errorMessage)
             })
+        )
     }
 }
