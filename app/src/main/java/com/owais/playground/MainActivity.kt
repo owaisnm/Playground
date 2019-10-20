@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.owais.playground.databinding.MainActivityBinding
-import com.owais.playground.pagination.PaginationActivity
+import com.owais.playground.pagination.ImagesPaginationActivity
+import com.owais.playground.room.NewsRoomActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +18,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun openPagination() {
-        startActivity(Intent(this, PaginationActivity::class.java))
+    fun openImagesPaginationActivity() {
+        startActivity(Intent(this, ImagesPaginationActivity::class.java))
+    }
+
+    fun openNewsRoomActivity() {
+        startActivity(Intent(this, NewsRoomActivity::class.java))
     }
 }

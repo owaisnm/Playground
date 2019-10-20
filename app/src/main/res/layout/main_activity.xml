@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
                 name="presenter"
                 type="com.owais.playground.MainActivity" />
@@ -12,16 +13,55 @@
             android:layout_height="match_parent">
 
         <Button
-                android:id="@+id/button_pagination"
+                android:id="@+id/pagination_button"
                 style="@style/MainButton"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="20dp"
-                android:onClick="@{() -> presenter.openPagination()}"
+                android:onClick="@{() -> presenter.openImagesPaginationActivity()}"
                 android:text="@string/pagination"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/pagination_desc_textview"
+                style="@style/MainTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:paddingRight="20dp"
+                android:text="@string/pagination_desc"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pagination_button" />
+
+        <Button
+                android:id="@+id/room_button"
+                style="@style/MainButton"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="20dp"
+                android:onClick="@{() -> presenter.openNewsRoomActivity()()}"
+                android:text="@string/room"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pagination_desc_textview" />
+
+        <TextView
+                android:id="@+id/room_desc_textview"
+                style="@style/MainTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:paddingRight="20dp"
+                android:text="@string/room_desc"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/room_button" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

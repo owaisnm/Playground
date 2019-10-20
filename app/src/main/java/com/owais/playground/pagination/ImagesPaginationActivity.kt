@@ -17,20 +17,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class PaginationActivity : AppCompatActivity() {
+class ImagesPaginationActivity : AppCompatActivity() {
 
-    private lateinit var adapter: FeedListAdapter
+    private lateinit var adapter: ImageFeedListAdapter
     private lateinit var viewModel: ImageFeedViewModel
     private lateinit var binding: FeedActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.pagination_activity)
+        setContentView(R.layout.images_pagination_activity)
         supportActionBar.let {
             title = getString(R.string.pagination)
         }
 
-        binding = DataBindingUtil.setContentView(this, R.layout.pagination_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.images_pagination_activity)
         viewModel = ViewModelProviders.of(this).get(ImageFeedViewModel::class.java!!)
 
         initAdapter()
@@ -40,7 +40,7 @@ class PaginationActivity : AppCompatActivity() {
     private fun initAdapter() {
         binding.recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = FeedListAdapter(this)
+        adapter = ImageFeedListAdapter(this)
         viewModel.imagesLiveData
             .observe(
                 this,

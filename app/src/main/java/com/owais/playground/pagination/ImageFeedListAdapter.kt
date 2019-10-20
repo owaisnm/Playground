@@ -14,7 +14,7 @@ import com.owais.playground.pagination.model.Image
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class FeedListAdapter(contextParam: Context) :
+class ImageFeedListAdapter(contextParam: Context) :
     PagedListAdapter<Image, RecyclerView.ViewHolder>(ImageDiffCallback) {
 
     private val context = contextParam
@@ -66,7 +66,7 @@ class FeedListAdapter(contextParam: Context) :
     companion object {
         val ImageDiffCallback = object : DiffUtil.ItemCallback<Image>() {
             override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.id.equals(newItem.id)
 
             }
 

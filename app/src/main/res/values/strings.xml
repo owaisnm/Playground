@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Playground</string>
-    <string name="pagination">Pagination with Search</string>
+    <string name="pagination">Pagination + Search</string>
+    <string name="pagination_desc">This activity allows to user to search for images using some keywords. It queries the Unsplash API for images, and implements pagination allowing the user to scroll continuously to keep querying for more images.</string>
+    <string name="room">Room + Swipe-Down</string>
+    <string name="room_desc">This activity allows to user to see the recent top headlines in the news and refreshes the data on a swipe-down gesture. It queries the News API for news articles, and caches the results in a database implemented using Room. If the user swipes down, it queries the api for fresh data. </string>
     <string name="failed">Failed</string>
     <string name="by_author">by %1$s</string>
     <string name="search">Search</string>

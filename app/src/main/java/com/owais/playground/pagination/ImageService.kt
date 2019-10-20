@@ -13,13 +13,12 @@ import retrofit2.http.Query
 
 interface ImageService {
 
-
     //    query	Search terms.
     //    page	Page number to retrieve. (Optional; default: 1)
     //    per_page	Number of items per page. (Optional; default: 10)
     //    collections	Collection ID(‘s) to narrow search. If multiple, comma-separated.
     //    orientation	Filter search results by photo orientation. Valid values are landscape, portrait, and squarish.
-    @GET("/search/photos")
+    @GET("search/photos")
     fun getImageFeed(
         @Query("client_id") apiKey: String,
         @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int, @Query(
@@ -37,7 +36,7 @@ interface ImageService {
             httpClient.addInterceptor(logging)
 
             val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.UNSPLASH_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())

@@ -1,3 +1,5 @@
+package com.owais.playground.pagination.model
+
 data class Urls (
 
 	val raw : String,

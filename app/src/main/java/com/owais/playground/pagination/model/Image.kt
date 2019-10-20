@@ -1,6 +1,5 @@
 package com.owais.playground.pagination.model
 
-import Urls
 import com.google.gson.annotations.SerializedName
 
 data class Image(
