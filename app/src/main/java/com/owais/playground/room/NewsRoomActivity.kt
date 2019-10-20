@@ -54,7 +54,7 @@ class NewsRoomActivity : AppCompatActivity() {
 
     private fun initSwipeView() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getArticles(true)
+            viewModel.getArticles()
         }
     }
 }

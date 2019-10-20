@@ -35,33 +35,32 @@ class NewsRepository(
     }
 
     private fun initialLoad() {
-
-        if (sharedPreference.getValueLong(REFRESH_TIME_MIN) == 0L) {
-            getArticles(true)
+        var dataExists = sharedPreference.getValueLong(REFRESH_TIME_MIN) != 0L
+        var hasMaxRefreshTimePassed =
+            sharedPreference.getValueLong(REFRESH_TIME_MIN) < getMaxRefreshTime(
+                Date()
+            ).time
+        if (!dataExists || hasMaxRefreshTimePassed) {
+            getArticles()
         }
     }
 
-    fun getArticles(force: Boolean) {
-        var hasMaxRefreshTimePassed = sharedPreference.getValueLong(REFRESH_TIME_MIN) < getMaxRefreshTime(
-                Date()
-            ).time
-        if (force || hasMaxRefreshTimePassed) {
-            compositeDisposable.add(
-                newsService.getNewsFeed(
-                    Constants.COUNTRY_CODE,
-                    Constants.NEWS_KEY
-                ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ t: NewsFeed? ->
-                        if (t != null) {
-                            executorService.execute {
-                                articleDao.insertAll(t.articles)
-                            }
+    fun getArticles() {
+        compositeDisposable.add(
+            newsService.getNewsFeed(
+                Constants.COUNTRY_CODE,
+                Constants.NEWS_KEY
+            ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: NewsFeed? ->
+                    if (t != null) {
+                        executorService.execute {
+                            articleDao.insertAll(t.articles)
                         }
-                    }, { t: Throwable? ->
-                        Log.d(TAG, "getNewsFeed error ", t)
-                    })
-            )
-        }
+                    }
+                }, { t: Throwable? ->
+                    Log.d(TAG, "getNewsFeed error ", t)
+                })
+        )
     }
 
     private fun getMaxRefreshTime(currentDate: Date): Date {

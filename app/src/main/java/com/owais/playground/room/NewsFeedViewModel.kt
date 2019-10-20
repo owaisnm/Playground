@@ -18,8 +18,8 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
         articlesLiveData = repository.articlesLiveData
     }
 
-    fun getArticles(force: Boolean) {
-        repository.getArticles(force)
+    fun getArticles() {
+        repository.getArticles()
     }
 
     override fun onCleared() {
