@@ -2,19 +2,33 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data class="ArticleItemBinding" />
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+                name="viewModel"
+                type="com.owais.playground.room.NewsFeedViewModel" />
+
+        <variable
+                name="item"
+                type="com.owais.playground.room.model.Article" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="@{item != null ? View.VISIBLE : View.GONE}">
 
         <TextView
                 android:id="@+id/article_title_textview"
                 style="@style/MainTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{item.title}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -25,9 +39,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:visibility="gone"
+                android:text='@{item.description != null ? item.description : ""}'
+                android:visibility="@{item.description!= null ? View.VISIBLE : View.GONE}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/article_title_textview" />
+
+        <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="@{() -> viewModel.delete(item)}"
+                android:text="@string/delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/article_description_textview" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

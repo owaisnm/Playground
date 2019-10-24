@@ -3,46 +3,66 @@ package com.owais.playground.room
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.owais.playground.Constants
+import com.owais.playground.R
 import com.owais.playground.databinding.ArticleItemBinding
 import com.owais.playground.room.model.Article
 
-class NewsFeedListAdapter :
+class NewsFeedListAdapter(viewModel: NewsFeedViewModel) :
     RecyclerView.Adapter<NewsFeedListAdapter.ArticleItemViewHolder>() {
 
-    private var articles = emptyList<Article>()
+    private val viewModel: NewsFeedViewModel = viewModel
+    private var items: List<Article> = emptyList()
 
-    fun setArticles(articles: List<Article>) {
-        this.articles = articles
+    companion object {
+        @JvmStatic
+        @BindingAdapter(Constants.ITEMS)
+        fun RecyclerView.bindItems(items: List<Article>?) {
+            val adapter = adapter as NewsFeedListAdapter
+            items?.let {
+                adapter.setItems(items)
+            }
+        }
+    }
+
+    fun setItems(items: List<Article>) {
+        this.items = items
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemBinding = ArticleItemBinding.inflate(layoutInflater, parent, false)
-        return ArticleItemViewHolder(itemBinding)
+        return ArticleItemViewHolder(parent, itemBinding)
     }
 
     override fun getItemCount(): Int {
-        return articles.size
+        return items.size
     }
 
     override fun onBindViewHolder(holder: ArticleItemViewHolder, position: Int) {
-        holder.bindTo(articles[position])
+        holder.bind(items[position], viewModel)
     }
 
-    inner class ArticleItemViewHolder(
-        private val binding: ArticleItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindTo(article: Article?) {
-            binding.articleDescriptionTextview.visibility = View.GONE
-            if (article != null) {
-                binding.articleTitleTextview.text = article.title
-                article.description?.let {
-                    binding.articleDescriptionTextview.text = article.description
-                    binding.articleDescriptionTextview.visibility = View.VISIBLE
-                }
-            }
+    abstract class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    class ArticleItemViewHolder(
+        private val parent: ViewGroup,
+        private val binding: ArticleItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.article_item,
+            parent,
+            false
+        )
+    ) : ViewHolder(binding.root) {
+        fun bind(item: Article, viewmodel: NewsFeedViewModel) {
+            binding.item = item
+            binding.viewModel = viewmodel
         }
+
+
     }
 }

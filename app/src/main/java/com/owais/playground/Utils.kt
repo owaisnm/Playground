@@ -1,16 +1,18 @@
 package com.owais.playground
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
 
 object Utils {
 
     @JvmStatic
-    fun getDate(milliSeconds: Long, dateFormat: String): String {
-        val formatter = SimpleDateFormat(dateFormat)
-        val calendar = Calendar.getInstance()
-        calendar.setTimeInMillis(milliSeconds)
-        return formatter.format(calendar.getTime())
+    fun dateToMilli(dateString: String, dateFormat: String): Long {
+        val sdf = SimpleDateFormat(dateFormat)
+        try {
+            val date = sdf.parse(dateString)
+            return date.time
+        } catch (exception: ParseException) {
+            return 0
+        }
     }
-
 }

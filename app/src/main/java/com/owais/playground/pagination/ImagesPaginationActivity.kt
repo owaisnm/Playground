@@ -31,7 +31,7 @@ class ImagesPaginationActivity : AppCompatActivity() {
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.images_pagination_activity)
-        viewModel = ViewModelProviders.of(this).get(ImageFeedViewModel::class.java!!)
+        viewModel = ViewModelProviders.of(this).get(ImageFeedViewModel::class.java)
 
         initAdapter()
         initSearch()

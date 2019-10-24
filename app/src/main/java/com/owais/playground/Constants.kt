@@ -18,5 +18,6 @@ class Constants {
         const val NEWS_ARTICLE_DB_NAME = "Articles.db"
         const val FRESH_TIMEOUT_MIN = 1
         const val PLAYGROUND_PREFERENCES = "playground_preferences"
+        const val ITEMS = "items"
     }
 }

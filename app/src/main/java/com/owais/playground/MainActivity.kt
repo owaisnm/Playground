@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.owais.playground.databinding.MainActivityBinding
 import com.owais.playground.pagination.ImagesPaginationActivity
-import com.owais.playground.room.NewsRoomActivity
+import com.owais.playground.room.NewsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +23,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openNewsRoomActivity() {
-        startActivity(Intent(this, NewsRoomActivity::class.java))
+        startActivity(Intent(this, NewsActivity::class.java))
     }
 }

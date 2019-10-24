@@ -16,6 +16,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".pagination.ImagesPaginationActivity" />
-        <activity android:name=".room.NewsRoomActivity" />
+        <activity android:name=".room.NewsActivity" />
     </application>
 </manifest>

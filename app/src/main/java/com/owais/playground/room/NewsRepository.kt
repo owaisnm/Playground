@@ -9,11 +9,13 @@ import com.owais.playground.SharedPreference.Companion.REFRESH_TIME_MIN
 import com.owais.playground.room.model.Article
 import com.owais.playground.room.model.ArticleDao
 import com.owais.playground.room.model.NewsFeed
+import io.reactivex.Completable
+import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
-import java.util.concurrent.Executors
 
 class NewsRepository(
     application: Application,
@@ -21,46 +23,86 @@ class NewsRepository(
     private val articleDao: ArticleDao
 ) {
 
-    val executorService = Executors.newFixedThreadPool(5)
-    var articlesLiveData: LiveData<List<Article>> = articleDao.getAll()
+    var articlesLiveData: LiveData<List<Article>>
     private val newsService = NewsService.getService()
     private val sharedPreference = SharedPreference(application)
 
     companion object {
-        private val TAG: String = NewsFeedViewModel::class.java.simpleName
+        private val TAG: String = NewsRepository::class.java.simpleName
     }
 
     init {
-        initialLoad()
+        articlesLiveData = articleDao.getAll()
+        loadData()
     }
 
-    private fun initialLoad() {
+    private fun loadData() {
         var dataExists = sharedPreference.getValueLong(REFRESH_TIME_MIN) != 0L
         var hasMaxRefreshTimePassed =
             sharedPreference.getValueLong(REFRESH_TIME_MIN) < getMaxRefreshTime(
                 Date()
             ).time
         if (!dataExists || hasMaxRefreshTimePassed) {
-            getArticles()
+            getArticles(null)
         }
     }
 
-    fun getArticles() {
+    fun getArticles(callback: GetArticlesCallback?) {
         compositeDisposable.add(
             newsService.getNewsFeed(
                 Constants.COUNTRY_CODE,
                 Constants.NEWS_KEY
             ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: NewsFeed? ->
+                    Log.d(TAG, "getNewsFeed success")
                     if (t != null) {
-                        executorService.execute {
-                            articleDao.insertAll(t.articles)
-                        }
+                        insertAll(t.articles)
                     }
+                    callback?.let { callback.onSuccess(t?.articles) }
                 }, { t: Throwable? ->
                     Log.d(TAG, "getNewsFeed error ", t)
+                    callback?.let { callback.onFailure(t) }
                 })
         )
+    }
+
+    private fun insertAll(items: List<Article>) {
+        Completable.fromAction {
+            articleDao.insertAll(items)
+        }.observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    Log.d(TAG, "insertAll success")
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(TAG, "insertAll error", e)
+                }
+            })
+    }
+
+
+    fun delete(item: Article) {
+        Completable.fromAction {
+            articleDao.delete(item)
+        }.observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(object : CompletableObserver {
+                override fun onComplete() {
+                    Log.d(TAG, "delete success")
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(TAG, "delete error", e)
+                }
+            })
     }
 
     private fun getMaxRefreshTime(currentDate: Date): Date {
@@ -70,4 +112,8 @@ class NewsRepository(
         return Calendar.getInstance().time
     }
 
+    interface GetArticlesCallback {
+        fun onSuccess(articles: List<Article>?)
+        fun onFailure(t: Throwable?)
+    }
 }

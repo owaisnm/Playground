@@ -7,4 +7,5 @@
     <string name="failed">Failed</string>
     <string name="by_author">by %1$s</string>
     <string name="search">Search</string>
+    <string name="delete">Delete</string>
 </resources>

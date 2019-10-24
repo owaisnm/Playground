@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.owais.playground.Utils
 
 @Entity(tableName = "articles")
 data class Article(
@@ -15,7 +16,16 @@ data class Article(
     val description: String?,
     val url: String?,
     @ColumnInfo(name = "url_to_image") val urlToImage: String?,
-    @ColumnInfo(name = "published_at") val publishedAt: String,
+    val publishedAt: String?,
+    @ColumnInfo(name = "published_at_milli")
+    val publishedAtMilli: Long? = (if (publishedAt != null) {
+        Utils.dateToMilli(
+            publishedAt,
+            "yyy-MM-ddTHH:mm:ssz"
+        )
+    } else {
+        null
+    }),
     val content: String?
 ) {
 
