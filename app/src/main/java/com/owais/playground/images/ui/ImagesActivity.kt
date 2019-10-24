@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class ImagesPaginationActivity : AppCompatActivity() {
+class ImagesActivity : AppCompatActivity() {
 
     private lateinit var adapter: ImageFeedListAdapter
     private lateinit var viewModel: ImageFeedViewModel
