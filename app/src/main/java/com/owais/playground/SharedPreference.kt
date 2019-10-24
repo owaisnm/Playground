@@ -3,10 +3,6 @@ package com.owais.playground
 import android.content.Context
 import android.content.SharedPreferences
 
-/**
- * Created by Kolincodes on 10/05/2018.
- */
-
 class SharedPreference(context: Context) {
     companion object {
         const val REFRESH_TIME_MIN = "max.refresh.time"

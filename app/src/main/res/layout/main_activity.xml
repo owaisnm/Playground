@@ -19,7 +19,7 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="20dp"
                 android:onClick="@{() -> presenter.openImagesPaginationActivity()}"
-                android:text="@string/pagination"
+                android:text="@string/images_feature_title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -30,12 +30,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:paddingRight="20dp"
-                android:text="@string/pagination_desc"
+                android:text="@string/images_feature_desc"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pagination_button" />
+
+
+        <TextView
+                android:id="@+id/pagination_features_textview"
+                style="@style/MainTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:paddingRight="20dp"
+                android:text="@string/images_features_list"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pagination_desc_textview" />
 
         <Button
                 android:id="@+id/room_button"
@@ -44,10 +56,10 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="20dp"
                 android:onClick="@{() -> presenter.openNewsRoomActivity()()}"
-                android:text="@string/room"
+                android:text="@string/news_feature_title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pagination_desc_textview" />
+                app:layout_constraintTop_toBottomOf="@id/pagination_features_textview" />
 
         <TextView
                 android:id="@+id/room_desc_textview"
@@ -55,13 +67,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:paddingRight="20dp"
-                android:text="@string/room_desc"
+                android:text="@string/news_feature_desc"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/room_button" />
 
+        <TextView
+                android:id="@+id/room_features_textview"
+                style="@style/MainTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:paddingRight="20dp"
+                android:text="@string/news_features_list"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/room_desc_textview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

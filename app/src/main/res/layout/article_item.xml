@@ -9,11 +9,11 @@
 
         <variable
                 name="viewModel"
-                type="com.owais.playground.room.NewsFeedViewModel" />
+                type="com.owais.playground.news.viewmodel.NewsFeedViewModel" />
 
         <variable
                 name="item"
-                type="com.owais.playground.room.model.Article" />
+                type="com.owais.playground.news.model.Article" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

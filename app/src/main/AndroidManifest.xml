@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pagination.ImagesPaginationActivity" />
-        <activity android:name=".room.NewsActivity" />
+        <activity android:name=".images.ui.ImagesPaginationActivity" />
+        <activity android:name=".news.ui.NewsActivity" />
     </application>
 </manifest>

@@ -2,7 +2,7 @@ package com.owais.playground
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.owais.playground.room.model.Source
+import com.owais.playground.news.model.Source
 
 class Convertor {
 
