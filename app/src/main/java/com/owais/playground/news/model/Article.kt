@@ -19,7 +19,7 @@ data class Article(
     val publishedAt: String?,
     @ColumnInfo(name = "published_at_milli")
     val publishedAtMilli: Long? = (if (publishedAt != null) {
-        Utils.dateToMilli(
+        Utils.dateToMillis(
             publishedAt,
             "yyy-MM-ddTHH:mm:ssz"
         )
@@ -31,7 +31,7 @@ data class Article(
 
     override fun equals(other: Any?): Boolean {
 
-        if (this == other) return true
+        if (this === other) return true
         if (other?.javaClass != javaClass) return false
 
         other as Article

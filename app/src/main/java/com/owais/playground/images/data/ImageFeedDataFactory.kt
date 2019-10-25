@@ -10,8 +10,7 @@ class FeedDataFactory(
     private val imageService: ImageService
 ) : DataSource.Factory<Int, Image>() {
 
-    var queryString = ""
-
+    private var queryString = ""
     private val feedDataSourceLiveData = MutableLiveData<FeedDataSource>()
 
     override fun create(): DataSource<Int, Image> {

@@ -26,12 +26,12 @@ class ImagesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.images_pagination_activity)
+        setContentView(R.layout.images_activity)
         supportActionBar.let {
             title = getString(R.string.images_feature_title)
         }
 
-        binding = DataBindingUtil.setContentView(this, R.layout.images_pagination_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.images_activity)
         viewModel = ViewModelProviders.of(this).get(ImageFeedViewModel::class.java)
 
         initAdapter()
@@ -57,6 +57,6 @@ class ImagesActivity : AppCompatActivity() {
             .distinctUntilChanged()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { viewModel.invalidate(it) }
+            .subscribe { viewModel.loadData(it) }
     }
 }

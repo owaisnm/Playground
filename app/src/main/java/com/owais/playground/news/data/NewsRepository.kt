@@ -23,7 +23,7 @@ class NewsRepository(
     private val articleDao: ArticleDao
 ) {
 
-    var articlesLiveData: LiveData<List<Article>>
+    var articlesLiveData: LiveData<List<Article>> = articleDao.getAll()
     private val newsService = NewsService.getService()
     private val sharedPreference = SharedPreference(application)
 
@@ -32,7 +32,6 @@ class NewsRepository(
     }
 
     init {
-        articlesLiveData = articleDao.getAll()
         loadData()
     }
 
