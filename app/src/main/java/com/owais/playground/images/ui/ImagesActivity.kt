@@ -1,6 +1,7 @@
 package com.owais.playground.images.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -27,8 +28,9 @@ class ImagesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.images_activity)
-        supportActionBar.let {
+        supportActionBar?.let {
             title = getString(R.string.images_feature_title)
+            it.setDisplayHomeAsUpEnabled(true)
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.images_activity)
@@ -36,6 +38,19 @@ class ImagesActivity : AppCompatActivity() {
 
         initAdapter()
         initSearch()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when (item.getItemId()) {
+                android.R.id.home -> {
+                    this.finish()
+                    return true
+                }
+                else -> return super.onOptionsItemSelected(item)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initAdapter() {

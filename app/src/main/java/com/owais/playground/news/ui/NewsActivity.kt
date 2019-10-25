@@ -1,6 +1,7 @@
 package com.owais.playground.news.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -20,19 +21,33 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.news_activity)
 
-        supportActionBar.let {
-            title = getString(R.string.news_feature_title)
+        supportActionBar?.let {
+            title = getString(R.string.news_toolbar)
+            it.setDisplayHomeAsUpEnabled(true)
         }
 
         initViewModel()
         initRecyclerView()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when (item.getItemId()) {
+                android.R.id.home -> {
+                    this.finish()
+                    return true
+                }
+                else -> return super.onOptionsItemSelected(item)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initViewModel() {
         val factory = NewsFeedViewModelFactory(this.application)
         binding = DataBindingUtil.setContentView(this, R.layout.news_activity)
         binding.lifecycleOwner = this
-        binding.viewModel=
+        binding.viewModel =
             ViewModelProviders.of(this, factory).get(NewsFeedViewModel::class.java)
         adapter = NewsFeedListAdapter(binding.viewModel!!)
     }

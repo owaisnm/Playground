@@ -13,7 +13,7 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
 
     private val repository: NewsRepository
     private val compositeDisposable = CompositeDisposable()
-    val articleDao = ArticleDatabase.getAppDataBase(application).newsDao()
+    private val articleDao = ArticleDatabase.getAppDataBase(application).newsDao()
     var articlesLiveData: LiveData<List<Article>>
 
     private val _isLoading = MutableLiveData<Boolean>().apply { value = false }
@@ -33,7 +33,7 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
         getArticles()
     }
 
-    fun getArticles() {
+    private fun getArticles() {
         repository.getArticles(object :
             NewsRepository.GetArticlesCallback {
             override fun onSuccess(articles: List<Article>?) {
@@ -46,14 +46,11 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
         })
     }
 
-
     fun delete(article: Article) {
         repository.delete(article)
     }
 
-
     override fun onCleared() {
         compositeDisposable.clear()
     }
-
 }

@@ -35,10 +35,10 @@ data class Article(
         if (other?.javaClass != javaClass) return false
 
         other as Article
-        return title.equals(other.title) && publishedAt.equals(other.publishedAt)
+        return title == other.title
     }
 
     override fun hashCode(): Int {
-        return title.hashCode() * publishedAt.hashCode()
+        return title.hashCode()
     }
 }

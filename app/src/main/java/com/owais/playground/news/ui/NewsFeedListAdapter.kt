@@ -12,10 +12,10 @@ import com.owais.playground.databinding.ArticleItemBinding
 import com.owais.playground.news.model.Article
 import com.owais.playground.news.viewmodel.NewsFeedViewModel
 
-class NewsFeedListAdapter(viewModel: NewsFeedViewModel) :
+class NewsFeedListAdapter(feedViewModel: NewsFeedViewModel) :
     RecyclerView.Adapter<NewsFeedListAdapter.ArticleItemViewHolder>() {
 
-    private val viewModel: NewsFeedViewModel = viewModel
+    private val feedViewModel: NewsFeedViewModel = feedViewModel
     private var items: List<Article> = emptyList()
 
     companion object {
@@ -48,7 +48,7 @@ class NewsFeedListAdapter(viewModel: NewsFeedViewModel) :
     }
 
     override fun onBindViewHolder(holder: ArticleItemViewHolder, position: Int) {
-        holder.bind(items[position], viewModel)
+        holder.bind(items[position], feedViewModel)
     }
 
     abstract class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -66,7 +66,5 @@ class NewsFeedListAdapter(viewModel: NewsFeedViewModel) :
             binding.item = item
             binding.viewModel = viewmodel
         }
-
-
     }
 }

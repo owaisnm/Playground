@@ -22,7 +22,8 @@ data class Image(
         if (this === other) return true
         if (other?.javaClass != javaClass) return false
 
-        return id.equals((other as Image).id)
+        other as Image
+        return id == other.id
     }
 
     override fun hashCode(): Int {
