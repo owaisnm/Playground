@@ -7,13 +7,14 @@ import androidx.databinding.DataBindingUtil
 import com.owais.playground.databinding.MainActivityBinding
 import com.owais.playground.images.ui.ImagesActivity
 import com.owais.playground.news.ui.NewsActivity
+import com.owais.playground.photouploader.PhotoFilterActivity
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var binding: MainActivityBinding =
-                DataBindingUtil.setContentView(this, R.layout.main_activity)
+            DataBindingUtil.setContentView(this, R.layout.main_activity)
         binding.presenter = this
 
     }
@@ -24,5 +25,9 @@ class MainActivity : AppCompatActivity() {
 
     fun openNewsRoomActivity() {
         startActivity(Intent(this, NewsActivity::class.java))
+    }
+
+    fun openWorkManagerActivity() {
+        startActivity(Intent(this, PhotoFilterActivity::class.java))
     }
 }

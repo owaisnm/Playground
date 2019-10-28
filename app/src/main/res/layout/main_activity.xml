@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp">
+                android:padding="20dp">
 
             <Button
                     android:id="@+id/pagination_button"
@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginTop="20dp"
-                    android:onClick="@{() -> presenter.openNewsRoomActivity()()}"
+                    android:onClick="@{() -> presenter.openNewsRoomActivity()}"
                     android:text="@string/news_feature_title"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -80,6 +80,18 @@
                     android:text="@string/news_features_list"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/room_desc_textview" />
+
+            <Button
+                    android:id="@+id/work_manager_button"
+                    style="@style/MainButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{() -> presenter.openWorkManagerActivity()}"
+                    android:text="@string/work_manager_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/room_features_textview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -32,7 +32,7 @@ android {
 
 dependencies {
     def room_version = "2.2.0"
-
+    def work_manger_version = "2.2.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -67,6 +67,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation "androidx.work:work-runtime:$work_manger_version"
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    kapt 'com.github.bumptech.glide:compiler:4.10.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
