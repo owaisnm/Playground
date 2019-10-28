@@ -26,11 +26,6 @@ import com.owais.playground.photouploader.PermissionsManager.Companion.REQUEST_C
 import com.owais.playground.photouploader.viewmodel.PhotoFilterViewModel
 
 class PhotoFilterActivity : AppCompatActivity() {
-    /*
-    - filter -> compress -> upload
-    - ring an alarm in every 10 seconds, until user cancels it
-    - Sending logs to a server.
-     */
 
     private lateinit var filterViewModel: PhotoFilterViewModel
     private lateinit var binding: PhotoActivityBinding
