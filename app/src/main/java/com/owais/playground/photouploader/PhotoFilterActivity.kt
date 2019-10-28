@@ -83,7 +83,7 @@ class PhotoFilterActivity : AppCompatActivity() {
                 val outputImageUri = workInfo.outputData.getString(KEY_IMAGE_URI)
 
                 if (!outputImageUri.isNullOrEmpty()) {
-                    filterViewModel.setOutputUri(outputImageUri as String)
+                    filterViewModel.setOutputUri(outputImageUri)
                 }
             } else {
                 showWorkInProgress()

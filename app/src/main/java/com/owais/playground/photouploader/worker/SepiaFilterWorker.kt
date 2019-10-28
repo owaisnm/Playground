@@ -43,9 +43,4 @@ class SepiaFilterWorker(contextParam: Context, workerParams: WorkerParameters) :
         }
     }
 
-//    private fun createOutputData(outputFilePath: String): Data {
-//        return Data.Builder()
-//            .putString(PhotoViewModel.OUTPUT_FILE_PATH, outputFilePath)
-//            .build()
-//    }
 }

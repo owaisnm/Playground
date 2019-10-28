@@ -13,17 +13,7 @@ import com.owais.playground.photouploader.worker.CleanupWorker
 import com.owais.playground.photouploader.worker.SaveImageToFileWorker
 import com.owais.playground.photouploader.worker.SepiaFilterWorker
 
-//import com.owais.playground.photouploader.worker.SepiaFilterWorker
-
-
 class PhotoFilterViewModel(application: Application) : AndroidViewModel(application) {
-
-    companion object {
-        const val INPUT_FILE_PATH: String = "input.file.path"
-        const val OUTPUT_FILE_PATH: String = "output.file.path"
-    }
-
-    private val TAG by lazy { PhotoFilterViewModel::class.java.simpleName }
 
     internal var imageUri: Uri? = null
     private val _outputUri = MutableLiveData<Uri>()
@@ -70,9 +60,11 @@ class PhotoFilterViewModel(application: Application) : AndroidViewModel(applicat
     internal fun setImageUri(uri: String?) {
         imageUri = uriOrNull(uri)
     }
+
     internal fun cancelWork() {
         workManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME)
     }
+
     internal fun setOutputUri(outputImageUri: String?) {
         _outputUri.value = uriOrNull(outputImageUri)
     }
@@ -84,6 +76,4 @@ class PhotoFilterViewModel(application: Application) : AndroidViewModel(applicat
             null
         }
     }
-
-
 }
