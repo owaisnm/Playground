@@ -21,6 +21,15 @@ shes the data on a swipe-down gesture. It queries the News API for news articles
 * Data Binding
 * SwipeRefreshLayout
 
+**PhotoFilterActivity**: 
+This activity allows the user to see WorkManager in action. The user can select an image from their device, apply the sepia filter to it to give it a brownish tinge, and then save it back to their device as a new image. This is accomplished by the chaining the following 3 tasks together using WorkManager, and running them one after the other: cleaning any previously saved image, applying the sepia filter on the newly selected image, and then saving that new image to the device. The code has some artificial `sleep()` calls to introduce some delays. We display a notification to show the progress until the work is completed. Note: most of the WorkManager code is a re-implementation of [Google's codelab on WorkManager](https://codelabs.developers.google.com/codelabs/android-workmanager-kt/).
+
+**Features**:
+* ViewModel
+* LiveData
+* Data Binding
+* WorkManager
+
 ### To run
 1. generate keys for whichever  apis you intend to use from the features list: 
 - [Unsplash API](https://unsplash.com/developers)
@@ -35,5 +44,6 @@ shes the data on a swipe-down gesture. It queries the News API for news articles
 Playground_UnsplashAccessKey="<your_key>"
 Playground_NewsKey="<your_key>"
 ```
+If you don't need to run one of the features, you can leave the `<your_key>` portion blank, but you do need to add all of the key names - i.e.: `Playground_UnsplashAccessKey=""`
 
 
