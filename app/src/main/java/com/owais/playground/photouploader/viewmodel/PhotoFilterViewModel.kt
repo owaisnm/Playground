@@ -15,16 +15,36 @@ import com.owais.playground.photouploader.worker.SepiaFilterWorker
 
 class PhotoFilterViewModel(application: Application) : AndroidViewModel(application) {
 
-    internal var imageUri: Uri? = null
+    var imageUri: Uri? = null
+
     private val _outputUri = MutableLiveData<Uri>()
     var outputUri: LiveData<Uri>
-    internal val outputWorkInfos: LiveData<List<WorkInfo>>
-
+    var _workInfoState = MutableLiveData<Boolean>()//.apply { true }
+    var workInfoState: LiveData<Boolean>
+    var workInfos: LiveData<List<WorkInfo>>
     private val workManager = WorkManager.getInstance(application)
 
     init {
-        outputWorkInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
+        workInfoState = _workInfoState
         outputUri = _outputUri
+        workInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
+    }
+
+    fun onWorkInfosChanged(workInfos: List<WorkInfo>) {
+        if (workInfos.isNullOrEmpty()) {
+            return
+        }
+
+        val workInfo = workInfos[0]
+        if (workInfo.state.isFinished) {
+            _workInfoState.postValue(true)
+            val outputImageUri = workInfo.outputData.getString(KEY_IMAGE_URI)
+            if (!outputImageUri.isNullOrEmpty()) {
+                _outputUri.postValue(uriOrNull(outputImageUri))
+            }
+        } else {
+            _workInfoState.postValue(false)
+        }
     }
 
     internal fun applySepia() {
@@ -65,10 +85,6 @@ class PhotoFilterViewModel(application: Application) : AndroidViewModel(applicat
         workManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME)
     }
 
-    internal fun setOutputUri(outputImageUri: String?) {
-        _outputUri.value = uriOrNull(outputImageUri)
-    }
-
     private fun uriOrNull(uriString: String?): Uri? {
         return if (!uriString.isNullOrEmpty()) {
             Uri.parse(uriString)
@@ -76,4 +92,5 @@ class PhotoFilterViewModel(application: Application) : AndroidViewModel(applicat
             null
         }
     }
+
 }

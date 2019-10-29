@@ -13,13 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.WorkInfo
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.owais.playground.Constants.Companion.KEY_IMAGE_URI
 import com.owais.playground.R
 import com.owais.playground.databinding.PhotoActivityBinding
 import com.owais.playground.photouploader.PermissionsManager.Companion.REQUEST_CODE_PERMISSIONS
@@ -43,6 +41,7 @@ class PhotoFilterActivity : AppCompatActivity() {
         setActionBar()
 
         binding = DataBindingUtil.setContentView(this, R.layout.photo_activity)
+        binding.lifecycleOwner = this
 
         setViewModel()
         setOnClickListeners()
@@ -61,36 +60,16 @@ class PhotoFilterActivity : AppCompatActivity() {
         filterViewModel.imageUri?.let {
             binding.filterImage.isEnabled = true
         }
-        filterViewModel.outputWorkInfos.observe(this, workInfosObserver())
         filterViewModel.outputUri.observe(this, Observer {
-            it?.let {
-                setImageView(it)
-            }
+            it?.let { setImageView(it) }
+        })
+        filterViewModel.workInfoState.observe(this, Observer {
+            it?.let { if (it) showWorkFinished() else showWorkInProgress() }
+        })
+        filterViewModel.workInfos.observe(this, Observer {
+            it?.let { filterViewModel.onWorkInfosChanged(it) }
         })
     }
-
-    private fun workInfosObserver(): Observer<List<WorkInfo>> {
-        return Observer { listOfWorkInfo ->
-
-            if (listOfWorkInfo.isNullOrEmpty()) {
-                return@Observer
-            }
-            val workInfo = listOfWorkInfo[0]
-
-            if (workInfo.state.isFinished) {
-                showWorkFinished()
-
-                val outputImageUri = workInfo.outputData.getString(KEY_IMAGE_URI)
-
-                if (!outputImageUri.isNullOrEmpty()) {
-                    filterViewModel.setOutputUri(outputImageUri)
-                }
-            } else {
-                showWorkInProgress()
-            }
-        }
-    }
-
 
     private fun showWorkInProgress() {
         binding.progressBar.visibility = View.VISIBLE

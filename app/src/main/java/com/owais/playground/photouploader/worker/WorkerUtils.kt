@@ -38,8 +38,7 @@ fun makeStatusNotification(message: String, context: Context) {
 
     // Make a channel if necessary
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        // Create the NotificationChannel, but only on API 26+ b
-        // ecause
+        // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
         val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
@@ -64,6 +63,10 @@ fun makeStatusNotification(message: String, context: Context) {
 
     // Show the notification
     NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
+}
+
+fun cancelNotification(context: Context) {
+    NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID)
 }
 
 /**
