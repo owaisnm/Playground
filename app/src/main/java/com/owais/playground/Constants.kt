@@ -18,7 +18,7 @@ class Constants {
         const val DEBOUNCE_MS = 800
         const val COUNTRY_CODE = "us"
         const val NEWS_ARTICLE_DB_NAME = "Articles.db"
-        const val FRESH_TIMEOUT_MIN = 1
+        const val FRESH_TIMEOUT_MIN = 3
         const val PLAYGROUND_PREFERENCES = "playground_preferences"
         const val ITEMS = "items"
 
