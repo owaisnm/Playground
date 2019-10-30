@@ -5,7 +5,9 @@
     <string name="news_feature_title">View Breaking News Headlines</string>
     <string name="news_toolbar">Breaking News Headlines</string>
     <string name="news_feature_desc">This activity allows to user to see the recent top headlines in the news and refreshes the data on a swipe-down gesture. It queries the News API for news articles, and caches the results in a database implemented using Room. If the user swipes down, it queries the api for fresh data. </string>
-    <string name="work_manager_title">Work Manager</string>
+    <string name="photo_filter_feature_title">Work Manager</string>
+    <string name="photo_filter_feature_desc">This activity allows the user to see WorkManager in action. The user can select an image from their device, apply the sepia filter to it to give it a brownish tinge, and then save it back to their device as a new image. This is accomplished by the chaining the following 3 tasks together using WorkManager, and running them one after the other: cleaning any previously saved image, applying the sepia filter on the newly selected image, and then saving that new image to the device.</string>
+    <string name="photo_filter_feature_list"><b>Features:</b>\nViewModel (MVVM)\nLiveData\nData Binding\nWorkManager</string>
     <string name="images_features_list"><b>Features:</b>\nRxJava\nViewModel\nLiveData\nPagination</string>
     <string name="news_features_list"><b>Features:</b>\nRxJava\nViewModel\nLiveData\nRoom\nData Binding\nSwipeRefreshLayout</string>
     <string name="failed">Failed</string>

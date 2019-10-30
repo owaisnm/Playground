@@ -88,10 +88,31 @@
                     android:layout_height="@dimen/button_height"
                     android:layout_marginTop="20dp"
                     android:onClick="@{() -> presenter.openWorkManagerActivity()}"
-                    android:text="@string/work_manager_title"
+                    android:text="@string/photo_filter_feature_title"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/room_features_textview" />
+
+            <TextView
+                    android:id="@+id/work_manager_feature_desc"
+                    style="@style/MainTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/photo_filter_feature_desc"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/work_manager_button" />
+
+            <TextView
+                    android:id="@+id/work_manager_feature_list"
+                    style="@style/MainTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/photo_filter_feature_list"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/work_manager_feature_desc" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
