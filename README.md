@@ -33,7 +33,7 @@ This activity allows the user to see WorkManager in action. The user can select 
 * Data Binding
 * WorkManager
 
-![](https://media.giphy.com/media/KbdzXIBfYYBJy7ZKnh/giphy.gif)
+![](https://media.giphy.com/media/jUnLqovX4HzGwTXqbz/giphy.gif)
 
 ### To run
 1. generate keys for whichever  apis you intend to use from the features list: 
