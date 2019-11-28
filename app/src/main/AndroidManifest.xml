@@ -21,5 +21,6 @@
         <activity android:name=".images.ui.ImagesActivity" />
         <activity android:name=".news.ui.NewsActivity" />
         <activity android:name=".photouploader.PhotoFilterActivity" />
+        <activity android:name=".ComplexViewModelLiveDataActivity"/>
     </application>
 </manifest>

@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         var binding: MainActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.main_activity)
         binding.presenter = this
-
     }
 
     fun openImagesPaginationActivity() {
@@ -30,4 +29,16 @@ class MainActivity : AppCompatActivity() {
     fun openWorkManagerActivity() {
         startActivity(Intent(this, PhotoFilterActivity::class.java))
     }
+
+//    fun openComplexViewModelLiveDataActivity() {
+//        startActivity(Intent(this, ComplexViewModelLiveDataActivity::class.java))
+//    }
+
+//    fun openDependencyInjectionActivity() {
+//        startActivity(Intent(this, DependencyInjection::class.java))
+//    }
+//
+//    fun openRxJavaActivity() {
+//        startActivity(Intent(this, RxJavaActivity::class.java))
+//    }
 }
