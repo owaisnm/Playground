@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit
 
 class ImagesFragment : Fragment() {
 
-
     private lateinit var adapter: ImageFeedListAdapter
     private lateinit var viewModel: ImageFeedViewModel
     private lateinit var binding: FeedActivityBinding

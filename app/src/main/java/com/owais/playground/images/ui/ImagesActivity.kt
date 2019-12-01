@@ -17,8 +17,7 @@ class ImagesActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.images_fragment_container, ImagesFragment.newInstance())
-                .addToBackStack(null).commit()
+                .add(R.id.images_fragment_container, ImagesFragment.newInstance()).commit()
         }
 
     }

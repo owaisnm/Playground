@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.owais.playground.databinding.MainActivityBinding
 import com.owais.playground.images.ui.ImagesActivity
 import com.owais.playground.news.ui.NewsActivity
-import com.owais.playground.photouploader.PhotoFilterActivity
+import com.owais.playground.photouploader.ui.PhotoFilterActivity
 
 class MainActivity : AppCompatActivity() {
 

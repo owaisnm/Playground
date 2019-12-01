@@ -1,4 +1,4 @@
-package com.owais.playground.photouploader
+package com.owais.playground.photouploader.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -8,9 +8,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -19,40 +21,38 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.owais.playground.R
-import com.owais.playground.databinding.PhotoActivityBinding
-import com.owais.playground.photouploader.PermissionsManager.Companion.REQUEST_CODE_PERMISSIONS
+import com.owais.playground.databinding.PhotoFragmentBinding
+import com.owais.playground.photouploader.PermissionsManager
 import com.owais.playground.photouploader.viewmodel.PhotoFilterViewModel
 
-class PhotoFilterActivity : AppCompatActivity() {
+class PhotoFilterFragment : Fragment() {
 
     private lateinit var filterViewModel: PhotoFilterViewModel
-    private lateinit var binding: PhotoActivityBinding
+    private lateinit var binding: PhotoFragmentBinding
 
-    private val TAG by lazy { PhotoFilterActivity::class.java.simpleName }
-    private val permissionsManager by lazy { PermissionsManager(this) }
+    private val TAG by lazy { PhotoFilterFragment::class.java.simpleName }
+    private val permissionsManager by lazy { PermissionsManager(activity as Activity) }
 
     companion object {
         private const val REQUEST_CODE_IMAGE = 100
+        fun newInstance(): PhotoFilterFragment {
+            return PhotoFilterFragment()
+        }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.photo_activity)
-        setActionBar()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.photo_fragment, container, false)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.photo_activity)
+        binding = DataBindingUtil.setContentView(activity as Activity, R.layout.photo_fragment)
         binding.lifecycleOwner = this
 
         setViewModel()
         setOnClickListeners()
-
-    }
-
-    private fun setActionBar() {
-        supportActionBar?.let {
-            title = getString(R.string.photo_features_title)
-            it.setDisplayHomeAsUpEnabled(true)
-        }
+        return view
     }
 
     private fun setViewModel() {
@@ -101,7 +101,10 @@ class PhotoFilterActivity : AppCompatActivity() {
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        startActivityForResult(chooseIntent, REQUEST_CODE_IMAGE)
+        startActivityForResult(
+            chooseIntent,
+            REQUEST_CODE_IMAGE
+        )
     }
 
     private fun handleImageRequestResult(intent: Intent) {
@@ -157,7 +160,7 @@ class PhotoFilterActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(code, permissions, result)
 
         when (code) {
-            REQUEST_CODE_PERMISSIONS -> {
+            PermissionsManager.REQUEST_CODE_PERMISSIONS -> {
                 if (result.isNotEmpty() && result[0] == PackageManager.PERMISSION_GRANTED) {
                     showImagePicker()
                 }
@@ -166,6 +169,7 @@ class PhotoFilterActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_IMAGE ->
@@ -178,4 +182,5 @@ class PhotoFilterActivity : AppCompatActivity() {
             Log.d(TAG, String.format("Unexpected Result code %s", resultCode))
         }
     }
+
 }
